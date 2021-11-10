@@ -20,10 +20,10 @@ int main(){
 
   Client client; /* Initialisation des clients */
   client.horaireDepart = (Horaire) {-1, -1, -1};
-  client.dureeService = -1;
 
   while(estInferieurHoraire(horaireActuelle, horaireFin)){
     client.horaireArrivee = horaireActuelle;
+    client.dureeService = tempsServiceClient();
     ajouterFile(file, client);
     horaireActuelle = ajouterHoraire(horaireActuelle, convertisseurMinHoraire(tempsProchainClient()));
   }
@@ -39,6 +39,11 @@ double aleatoire(){
 
 
 int tempsProchainClient(){
-  /* Retourne un temps ( int ) en minute */
+  /* Retourne un temps ( int ) en minute selon la loi de poisson*/
   return -log(1-aleatoire())/LAMBDA;
+}
+
+int tempsServiceClient(){
+  /* Retoure un temps ( int ) en minute selon la loi uniforme*/
+  return aleatoire()*(SERVICEMAX-SERVICEMIN)+SERVICEMIN;
 }

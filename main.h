@@ -12,6 +12,12 @@
 /* Parametre loi de probabilite: loi de poisson */
 #define LAMBDA 0.05
 
+/* Parametre intervalle duree en minute du service */
+#define SERVICEMIN 5
+#define SERVICEMAX 25
+
+
 /* Prototypes */
 double aleatoire();
 int tempsProchainClient();
+int tempsServiceClient();
