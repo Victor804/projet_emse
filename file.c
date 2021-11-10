@@ -65,3 +65,19 @@ void afficherFile(File *file){
         element = element->suivant;
     }
   }
+
+
+int estVideFile(File *file){
+  /* Retourne 1 si la file est vide sinon 0 */
+  if(file == NULL){
+    exit(EXIT_FAILURE);
+  }
+  
+  Element *element = file->premier;
+  if(element == NULL){
+    return 1;
+  }
+  else{
+    return 0;
+  }
+}

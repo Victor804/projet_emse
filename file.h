@@ -17,3 +17,4 @@ File *initFile();
 void ajouterFile(File *file, Client client);
 Client extraireFile(File *file);
 void afficherFile(File *file);
+int estVideFile(File *file);

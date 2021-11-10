@@ -15,12 +15,14 @@ int main(){
   File *file; /* Creation de la file d'attente */
   file = initFile();
 
+
   /* Remplissage de la file d'attente pour une journee */
   Horaire horaireActuelle = horaireDebut;
 
   Client client; /* Initialisation des clients */
   client.horaireDepart = (Horaire) {-1, -1, -1};
 
+  horaireActuelle = ajouterHoraire(horaireActuelle, convertisseurMinHoraire(tempsProchainClient()));
   while(estInferieurHoraire(horaireActuelle, horaireFin)){
     client.horaireArrivee = horaireActuelle;
     client.dureeService = tempsServiceClient();
@@ -29,6 +31,27 @@ int main(){
   }
   afficherFile(file);
 
+  printf("Calcule de l'horaire de sortie:\n");
+
+  /* Calcule de l'horaire de sortie */
+  client = extraireFile(file);/* Initialisation avec le premier client */
+  client.horaireDepart = ajouterHoraire(client.horaireArrivee, convertisseurMinHoraire(client.dureeService));
+
+  Horaire horairePassage = client.horaireDepart;
+  afficherClient(client);printf("\n");
+
+  while(!estVideFile(file)){
+    client = extraireFile(file);
+    if(estInferieurHoraire(horairePassage, client.horaireArrivee)){
+      client.horaireDepart = ajouterHoraire(client.horaireArrivee, convertisseurMinHoraire(client.dureeService));
+    }
+    else{
+      client.horaireDepart = ajouterHoraire(horairePassage, convertisseurMinHoraire(client.dureeService));
+    }
+    afficherClient(client);printf("\n");
+
+    horairePassage = client.horaireDepart;
+  }
   return 0;
 }
 
