@@ -7,6 +7,8 @@
 #include "file.h"
 #include "fichier.h"
 
+
+
 int main(){
   srand(time(NULL)); /* Initialisation de l'aleatoire */
 
@@ -55,7 +57,7 @@ int main(){
 
     horairePassage = client.horaireDepart;
   }
-    
+
   return 0;
 }
 
