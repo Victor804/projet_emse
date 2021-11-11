@@ -11,3 +11,4 @@ void afficherHoraire(Horaire horaire);
 int estInferieurHoraire(Horaire h1, Horaire h2);
 Horaire ajouterHoraire(Horaire h1, Horaire h2);
 Horaire convertisseurMinHoraire(int minute);
+int convertisseurHoraireMin(Horaire horaire);
