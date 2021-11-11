@@ -16,6 +16,8 @@
 #define SERVICEMIN 5
 #define SERVICEMAX 25
 
+/* Parametre fichier */
+#define FILENAME "sauvegarde.txt"
 
 /* Prototypes */
 double aleatoire();

@@ -5,12 +5,16 @@
 #include "main.h"
 #include "client.h"
 #include "file.h"
-
+#include "fichier.h"
 
 int main(){
   srand(time(NULL)); /* Initialisation de l'aleatoire */
+
   Horaire horaireDebut = {HEURE_DEBUT, MINUTE_DEBUT, SECONDE_DEBUT};/* Initialisation des horaires de l'entreprise debut et fin */
   Horaire horaireFin = {HEURE_FIN, MINUTE_FIN, SECONDE_FIN};
+
+  FILE* fichier;
+  fichier = fopen(FILENAME, "w");
 
   File *file; /* Creation de la file d'attente */
   file = initFile();
@@ -39,6 +43,7 @@ int main(){
 
   Horaire horairePassage = client.horaireDepart;
   afficherClient(client);printf("\n");
+  enregisterClient(fichier, client);
 
   while(!estVideFile(file)){
     client = extraireFile(file);
@@ -49,6 +54,7 @@ int main(){
       client.horaireDepart = ajouterHoraire(horairePassage, convertisseurMinHoraire(client.dureeService));
     }
     afficherClient(client);printf("\n");
+    enregisterClient(fichier, client);
 
     horairePassage = client.horaireDepart;
   }
