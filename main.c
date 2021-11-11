@@ -33,9 +33,6 @@ int main(){
     ajouterFile(file, client);
     horaireActuelle = ajouterHoraire(horaireActuelle, convertisseurMinHoraire(tempsProchainClient()));
   }
-  afficherFile(file);
-
-  printf("Calcule de l'horaire de sortie:\n");
 
   /* Calcule de l'horaire de sortie */
   client = extraireFile(file);/* Initialisation avec le premier client */
@@ -58,6 +55,7 @@ int main(){
 
     horairePassage = client.horaireDepart;
   }
+    
   return 0;
 }
 
