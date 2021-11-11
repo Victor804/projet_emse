@@ -90,3 +90,8 @@ Horaire convertisseurMinHoraire(int minute){
 
   return horaire;
 }
+
+
+int convertisseurHoraireMin(Horaire horaire){
+  return horaire.heure*60 + horaire.min;
+}
