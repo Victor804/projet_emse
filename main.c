@@ -11,7 +11,15 @@
 
 int main(){
   srand(time(NULL)); /* Initialisation de l'aleatoire */
+  for(int i; i < 100; i++){
+      simulation();
+  }
 
+  return 0;
+}
+
+
+void simulation(){
   Horaire horaireDebut = {HEURE_DEBUT, MINUTE_DEBUT, SECONDE_DEBUT};/* Initialisation des horaires de l'entreprise debut et fin */
   Horaire horaireFin = {HEURE_FIN, MINUTE_FIN, SECONDE_FIN};
 
@@ -57,9 +65,8 @@ int main(){
 
     horairePassage = client.horaireDepart;
   }
-
-  return 0;
 }
+
 
 double aleatoire(){
   /* Retourne une valeur entre 0 et 1 */
@@ -71,6 +78,7 @@ int tempsProchainClient(){
   /* Retourne un temps ( int ) en minute selon la loi de poisson*/
   return -log(1-aleatoire())/LAMBDA;
 }
+
 
 int tempsServiceClient(){
   /* Retoure un temps ( int ) en minute selon la loi uniforme*/

@@ -23,3 +23,4 @@
 double aleatoire();
 int tempsProchainClient();
 int tempsServiceClient();
+void simulation();

@@ -15,3 +15,6 @@ main.o: main.c main.h
 
 fichier.o: fichier.c
 	gcc -c fichier.c -o fichier.o
+
+analyse.o: analyse.c
+	gcc -c analyse.c -o fichier.o
