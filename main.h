@@ -9,8 +9,14 @@
 #define MINUTE_FIN 0
 #define SECONDE_FIN 0
 
+/* Horaire  de fin d'une journee service*/
+#define HEURE_SERVICE_FIN 17
+#define MINUTE_SERVICE_FIN 30
+#define SECONDE_SERVICE_FIN 0
+
+
 /* Parametre loi de probabilite: loi de poisson */
-#define LAMBDA 0.05
+#define LAMBDA 0.07
 
 /* Parametre intervalle duree en minute du service */
 #define SERVICEMIN 5
