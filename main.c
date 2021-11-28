@@ -37,19 +37,19 @@ void simulation(Analyse *analyse){
 
 
   /* Remplissage de la file d'attente pour une journee */
-  Horaire horaireActuelle = horaireDebut;
+  Horaire horaireActuel = horaireDebut;
 
   Client client; /* Initialisation des clients */
   client.horaireDepart = (Horaire) {-1, -1, -1};
 
-  horaireActuelle = ajouterHoraire(horaireActuelle, convertisseurMinHoraire(tempsProchainClient()));
+  horaireActuel = ajouterHoraire(horaireActuel, convertisseurMinHoraire(tempsProchainClient()));
 
   int tailleFile = 0;
-  while(estInferieurHoraire(horaireActuelle, horaireFin)){
-    client.horaireArrivee = horaireActuelle;
+  while(estInferieurHoraire(horaireActuel, horaireFin)){
+    client.horaireArrivee = horaireActuel;
     client.dureeService = tempsServiceClient();
     ajouterFile(file, client);
-    horaireActuelle = ajouterHoraire(horaireActuelle, convertisseurMinHoraire(tempsProchainClient()));
+    horaireActuel = ajouterHoraire(horaireActuel, convertisseurMinHoraire(tempsProchainClient()));
     tailleFile++;
   }
 
