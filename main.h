@@ -16,7 +16,7 @@
 
 
 /* Parametre loi de probabilite: loi de poisson */
-#define LAMBDA 0.07
+#define LAMBDA 0.01
 
 /* Parametre intervalle duree en minute du service */
 #define SERVICEMIN 5

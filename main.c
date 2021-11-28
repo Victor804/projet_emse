@@ -44,13 +44,13 @@ void simulation(Analyse *analyse){
 
   horaireActuel = ajouterHoraire(horaireActuel, convertisseurMinHoraire(tempsProchainClient()));
 
-  int tailleFile = 0;
+  int nombreClient = 0;
   while(estInferieurHoraire(horaireActuel, horaireFin)){
     client.horaireArrivee = horaireActuel;
     client.dureeService = tempsServiceClient();
     ajouterFile(file, client);
     horaireActuel = ajouterHoraire(horaireActuel, convertisseurMinHoraire(tempsProchainClient()));
-    tailleFile++;
+    nombreClient++;
   }
 
   /* Calcule de l'horaire de sortie */
@@ -60,17 +60,27 @@ void simulation(Analyse *analyse){
   Horaire horairePassage = client.horaireDepart;
   Horaire horaireDepart;
 
-  //afficherClient(client);printf("\n");
+  afficherClient(client);printf("\n");
   //enregisterClient(fichier, client);
   int tempsReponseCum = 0;//Temps de reponse cumulee
   int nombreClientNonServis = 0;//Nombre de client non servis
+  int tailleFileMax = 0;
+  int tailleFile = 0;
+  int nombreClientEnFileDattente = 0;
+  int nombreFile = 0;
   while(!estVideFile(file)){
     client = extraireFile(file);
     if(estInferieurHoraire(horairePassage, client.horaireArrivee)){
       horaireDepart = ajouterHoraire(client.horaireArrivee, convertisseurMinHoraire(client.dureeService));
+      if(tailleFile != 0){
+        nombreFile++;
+        tailleFile = 0;
+      }
     }
     else{
       horaireDepart = ajouterHoraire(horairePassage, convertisseurMinHoraire(client.dureeService));
+      tailleFile++;
+      nombreClientEnFileDattente++;
     }
     if(estInferieurHoraire(horaireDepart, horaireServiceFin)){
       client.horaireDepart = horaireDepart;
@@ -83,9 +93,25 @@ void simulation(Analyse *analyse){
       nombreClientNonServis++;
       horairePassage = horaireServiceFin;
     }
+    if(tailleFile > tailleFileMax){
+      tailleFileMax = tailleFile;
+    }
     afficherClient(client);printf("\n");
   }
-  updateAnalyse(analyse, tailleFile, (convertisseurHoraireMin(horaireFin)-convertisseurHoraireMin(horaireDebut))/60, tempsReponseCum/tailleFile, nombreClientNonServis);
+  float moyenneTailleFile;
+  if(nombreFile == 0){
+    moyenneTailleFile = nombreClientEnFileDattente;
+  }
+  else{
+    moyenneTailleFile = nombreClientEnFileDattente/nombreFile;
+  }
+  updateAnalyse(analyse,
+                nombreClient,
+                (convertisseurHoraireMin(horaireFin)-convertisseurHoraireMin(horaireDebut))/60,
+                tempsReponseCum/(nombreClient-nombreClientNonServis),
+                nombreClientNonServis,
+                tailleFileMax,
+                moyenneTailleFile);
 }
 
 

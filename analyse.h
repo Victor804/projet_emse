@@ -1,15 +1,15 @@
 /* Structure d'analyse */
 typedef struct{
   int nombreSimulation;
-  int moyenneTailleFile;
-  int moyenneTailleMaxFile;
+  float moyenneTailleFile;
+  float moyenneTailleMaxFile;
   float debitMoyen;
   float tempsReponse;
-  int nombreClientNonServis;
+  float nombreClientNonServis;
 }Analyse;
 
 
 
 /* Prototypes */
 void afficherAnalyse(Analyse analyse);
-void updateAnalyse(Analyse *analyse, int nombreClient, float tempsSimulation, int tempsReponse, int nombreClientNonServis);
+void updateAnalyse(Analyse *analyse, int nombreClient, float tempsSimulation, int tempsReponse, int nombreClientNonServis, int tailleMaxFile, float moyenneTailleFile);
