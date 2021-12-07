@@ -16,7 +16,10 @@
 
 
 /* Parametre loi de probabilite: loi de poisson */
-#define LAMBDA 0.01
+#define LAMBDA 0.05
+
+/* Nombre de simulation */
+#define NBSIMULATION 2
 
 /* Parametre intervalle duree en minute du service */
 #define SERVICEMIN 5
@@ -30,3 +33,4 @@ double aleatoire();
 int tempsProchainClient();
 int tempsServiceClient();
 void simulation();
+void menu();

@@ -5,7 +5,7 @@
 
 
 void afficherAnalyse(Analyse analyse){
-  printf("Nombre simulation:%d\nMoyenne taille file:%g\nTaille max file:%g\nDebit moyen:%g Personne/h\ntemps de reponse:%f\nClient non servis:%g\n",
+  printf("Nombre simulation:%d\nMoyenne taille file:%g\nTaille max file:%g\nDebit moyen:%g Personne/h\ntemps de reponse:%f min\nClient non servis:%g\n",
           analyse.nombreSimulation,
           round(analyse.moyenneTailleFile),
           round(analyse.moyenneTailleMaxFile),

@@ -14,11 +14,10 @@ int main(){
 
   Analyse analyse = {0, 0, 0, 0, 0, 0};
 
-  for(int i = 0; i < 1; i++){
+  for(int i = 0; i < NBSIMULATION; i++){
     simulation(&analyse);
   }
   afficherAnalyse(analyse);
-
 
   return 0;
 }
@@ -29,12 +28,19 @@ void simulation(Analyse *analyse){
   Horaire horaireFin = {HEURE_FIN, MINUTE_FIN, SECONDE_FIN};
   Horaire horaireServiceFin = {HEURE_SERVICE_FIN, MINUTE_SERVICE_FIN, SECONDE_SERVICE_FIN};
 
-  //FILE* fichier;
-  //fichier = fopen(FILENAME, "w");
+  FILE* fichier;
+  if(analyse->nombreSimulation != 0){// On ajoute les nouvelles simulations dans le fichier de sauvegarde
+    fichier = fopen(FILENAME, "a");
+  }
+  else {// On écrase les anciennes simulations
+    fichier = fopen(FILENAME, "w");
+  }
+
 
   File *file; /* Creation de la file d'attente */
   file = initFile();
 
+  fprintf(fichier, "###### Simulation   %d #######\n", analyse->nombreSimulation);
 
   /* Remplissage de la file d'attente pour une journee */
   Horaire horaireActuel = horaireDebut;
@@ -61,7 +67,7 @@ void simulation(Analyse *analyse){
   Horaire horaireDepart;
 
   afficherClient(client);printf("\n");
-  //enregisterClient(fichier, client);
+  enregisterClient(fichier, client);
   int tempsReponseCum = 0;//Temps de reponse cumulee
   int nombreClientNonServis = 0;//Nombre de client non servis
   int tailleFileMax = 0;
@@ -84,7 +90,6 @@ void simulation(Analyse *analyse){
     }
     if(estInferieurHoraire(horaireDepart, horaireServiceFin)){
       client.horaireDepart = horaireDepart;
-      //enregisterClient(fichier, client);
       tempsReponseCum += convertisseurHoraireMin(client.horaireDepart)-client.dureeService-convertisseurHoraireMin(client.horaireArrivee);
       horairePassage = client.horaireDepart;
     }
@@ -96,6 +101,7 @@ void simulation(Analyse *analyse){
     if(tailleFile > tailleFileMax){
       tailleFileMax = tailleFile;
     }
+    enregisterClient(fichier, client);
     afficherClient(client);printf("\n");
   }
   float moyenneTailleFile;
@@ -105,13 +111,19 @@ void simulation(Analyse *analyse){
   else{
     moyenneTailleFile = nombreClientEnFileDattente/nombreFile;
   }
+  int nombreClientServis = nombreClient-nombreClientNonServis;
+  if (nombreClientServis == 0){
+    nombreClientServis = 1;
+  }
   updateAnalyse(analyse,
                 nombreClient,
                 (convertisseurHoraireMin(horaireFin)-convertisseurHoraireMin(horaireDebut))/60,
-                tempsReponseCum/(nombreClient-nombreClientNonServis),
+                tempsReponseCum/nombreClientServis,
                 nombreClientNonServis,
                 tailleFileMax,
                 moyenneTailleFile);
+
+  fclose(fichier);
 }
 
 
